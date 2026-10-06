@@ -959,6 +959,76 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
   .header-left { gap: 10px; }
   .reset-btn { padding: 7px 12px; }
 }
+
+/* ============================================================ */
+/* GENERATOR PAGES — desktop workspace layout                   */
+/* ============================================================ */
+.container,
+.visiting-container {
+  max-width: 1240px;
+  padding: 20px 32px 72px;
+  gap: 20px 32px;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  align-items: start;
+}
+.visiting-container { grid-template-columns: minmax(0, 1fr) 540px; }
+@media (max-width: 960px) {
+  .container { grid-template-columns: minmax(0, 1fr) 360px; }
+  .visiting-container { grid-template-columns: minmax(0, 1fr) 440px; }
+}
+
+/* Page heading */
+.page-head {
+  grid-column: 1 / -1;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  padding: 8px 4px 6px;
+}
+.page-eyebrow {
+  font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #1d5fd1; margin-bottom: 6px;
+}
+.page-title {
+  font-size: 36px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.1;
+  color: #0b1526;
+}
+.page-sub { font-size: 15px; color: #5b6b82; margin-top: 8px; }
+.page-meta { display: flex; gap: 8px; flex-shrink: 0; padding-bottom: 4px; }
+.meta-chip {
+  font-size: 12px; font-weight: 700; color: #33415a;
+  background: #f3f6fa; border: 1px solid #e8edf4;
+  padding: 6px 12px; border-radius: 999px; white-space: nowrap;
+}
+
+/* Form column */
+.form-panel { gap: 20px; }
+section.card { padding: 24px 28px 28px; }
+section.card h2 { margin-bottom: 4px; }
+.card-desc {
+  font-size: 13px; line-height: 1.5; color: #5b6b82;
+  margin: 0 0 20px 34px;
+}
+.vc-back-row { display: none; }
+
+/* Preview column: stays in view, everything for the card in one place */
+.preview-panel { position: sticky; top: 84px; }
+.preview-header { padding: 14px 18px 14px 22px; }
+.preview-header .side-toggle {
+  margin: 0; background: #f3f6fa; border: 1px solid #e8edf4; box-shadow: none;
+}
+.preview-header .side-btn { color: #5b6b82; padding: 7px 16px; }
+.preview-header .side-btn:hover { color: #0b1526; }
+.preview-header .side-btn.active { background: #0a2463; color: #fff; box-shadow: 0 4px 10px -4px rgba(10,36,99,0.5); }
+.preview-body { padding: 28px 24px; }
+/* keep the whole panel (card + download) visible on shorter laptop screens */
+.card-frame { max-width: min(250px, calc((100vh - 500px) * 0.663)); min-width: 180px; }
+.vc-card-frame { max-width: 100%; }
+
+.download-section { padding: 18px 22px 22px; }
+.dl-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.dl-title { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: #0b1526; }
+.dl-hint { font-size: 12px; color: #8592a6; }
+.download-section .mode-tabs { margin-bottom: 12px; }
+.download-info { margin-top: 12px; font-size: 11px; color: #8592a6; }
 </style>
 </head>
 <body>
@@ -1082,12 +1152,21 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
 <!-- ID CARD APP — hidden until selected from landing            -->
 <!-- ========================================================== -->
 <div class="container" id="idCardApp" style="display: none;">
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">Card Studio</p>
+      <h2 class="page-title">Employee ID Card</h2>
+      <p class="page-sub">Fill in the details. The preview updates as you type. Fields marked <span class="req">*</span> are required.</p>
+    </div>
+    <div class="page-meta"><span class="meta-chip">57 × 89 mm</span><span class="meta-chip">Front + Back</span><span class="meta-chip">With QR</span></div>
+  </div>
 
   <!-- FORM -->
   <div class="form-panel">
 
     <section class="card">
       <h2>Employee Details</h2>
+      <p class="card-desc">Printed on the front of the card.</p>
       <div class="grid-2">
         <div class="field">
           <label class="field-label">First Name <span class="req">*</span></label>
@@ -1114,6 +1193,7 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
 
     <section class="card">
       <h2>Employee Photo <span class="req">*</span></h2>
+      <p class="card-desc">Shown in the circle on the front. You can zoom and reposition it after uploading.</p>
       <div class="photo-instructions">
         <div class="photo-instructions-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg></div>
         <div>
@@ -1164,7 +1244,8 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
     </section>
 
     <section class="card">
-      <h2>QR Code (front)</h2>
+      <h2>QR Code</h2>
+      <p class="card-desc">Printed on the front. It is created automatically from the Employee ID, so you only need to change it for a custom link.</p>
       <div class="field">
         <label class="field-label">URL or Text</label>
         <input type="text" class="input" id="qrText" placeholder="https://adamastech.in/employee/...">
@@ -1175,6 +1256,7 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
 
     <section class="card">
       <h2>Back of Card</h2>
+      <p class="card-desc">Printed on the back, for emergencies.</p>
       <div class="grid-2">
         <div class="field">
           <label class="field-label">Blood Group <span class="req">*</span></label>
@@ -1217,25 +1299,25 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
   </div>
 
   <!-- PREVIEW -->
-  <div class="preview-panel">
+  <div class="preview-panel" id="idPreview">
     <div class="preview-card">
       <div class="preview-header">
         <div>
           <div class="label">Live Preview</div>
           <div class="side-name" id="sideName">Front of card</div>
         </div>
-        <span class="preview-chip">57 × 89 mm</span>
-      </div>
-
-      <div class="preview-body">
-        <div class="card-frame" id="cardFrame"></div>
         <div class="side-toggle">
           <button class="side-btn active" data-side="front">Front</button>
           <button class="side-btn" data-side="back">Back</button>
         </div>
       </div>
 
+      <div class="preview-body">
+        <div class="card-frame" id="cardFrame"></div>
+      </div>
+
       <div class="download-section">
+        <div class="dl-head"><span class="dl-title">Download</span><span class="dl-hint">Pick the sides, then a format</span></div>
         <div class="mode-tabs">
           <button class="mode-tab" data-mode="both">Both sides</button>
           <button class="mode-tab active" data-mode="front">Front only</button>
@@ -1260,9 +1342,18 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
 <!-- VISITING CARD APP -->
 <!-- ========================================================== -->
 <div class="container visiting-container" id="visitingCardApp" style="display: grid;">
+  <div class="page-head">
+    <div>
+      <p class="page-eyebrow">Card Studio</p>
+      <h2 class="page-title">Visiting Card</h2>
+      <p class="page-sub">Fill in your details. The preview updates as you type. Fields marked <span class="req">*</span> are required.</p>
+    </div>
+    <div class="page-meta"><span class="meta-chip">89 × 51 mm</span><span class="meta-chip">Front + Back</span></div>
+  </div>
   <div class="form-panel">
     <section class="card">
-      <h2>Visiting Card Details</h2>
+      <h2>Your Details</h2>
+      <p class="card-desc">Printed on the front of the card.</p>
       <div class="grid-2">
         <label class="field">
           <span class="field-label">Full name <span class="req">*</span></span>
@@ -1287,7 +1378,11 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
           <div class="field-error" id="vcPhoneError"></div>
         </label>
       </div>
-      <div class="field" style="margin-top:16px;">
+    </section>
+    <section class="card">
+      <h2>Options</h2>
+      <p class="card-desc">Optional extras for the card.</p>
+      <div class="field">
         <label class="switch-row">
           <input type="checkbox" id="vcAddressToggle">
           Add address (optional)
@@ -1320,22 +1415,6 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
       </div>
     </section>
 
-    <section class="card">
-      <h2>Export</h2>
-      <div class="mode-tabs">
-        <button class="mode-tab active" data-vc-mode="both">Both sides</button>
-        <button class="mode-tab" data-vc-mode="front">Front only</button>
-        <button class="mode-tab" data-vc-mode="back">Back only</button>
-      </div>
-      <div class="download-grid" style="margin-top:14px;">
-        <button class="download-btn" id="vcDownloadPng">⬇ PNG</button>
-        <button class="download-btn secondary" id="vcDownloadPdf">⬇ PDF</button>
-      </div>
-      <div class="download-info">
-        PNG: 1076×644px each<br>
-        PDF: 89×51 mm page, front/back as separate pages
-      </div>
-    </section>
 
     <button class="reset-btn back-btn vc-back-row" id="backToLanding">← Back to selection</button>
   </div>
@@ -1347,15 +1426,29 @@ input[type="range"]::-moz-range-thumb { background: #1d5fd1; }
           <div class="label">Live preview</div>
           <div class="side-name" id="vcSideName">Back of card</div>
         </div>
-        <span class="preview-chip">89 × 51 mm</span>
-      </div>
-      <div class="preview-body">
-        <div class="vc-card-frame" id="vcCardFrame"></div>
         <div class="side-toggle">
           <button class="side-btn" data-vc-side="front">Front</button>
           <button class="side-btn" data-vc-side="back">Back</button>
         </div>
-        <div class="vc-download-info">Based on the uploaded visiting-card PDF template</div>
+      </div>
+      <div class="preview-body">
+        <div class="vc-card-frame" id="vcCardFrame"></div>
+      </div>
+      <div class="download-section">
+        <div class="dl-head"><span class="dl-title">Download</span><span class="dl-hint">Pick the sides, then a format</span></div>
+        <div class="mode-tabs">
+          <button class="mode-tab active" data-vc-mode="both">Both sides</button>
+          <button class="mode-tab" data-vc-mode="front">Front only</button>
+          <button class="mode-tab" data-vc-mode="back">Back only</button>
+        </div>
+        <div class="download-grid">
+          <button class="download-btn" id="vcDownloadPng">⬇ PNG</button>
+          <button class="download-btn secondary" id="vcDownloadPdf">⬇ PDF</button>
+        </div>
+        <div class="download-info">
+          PNG: 1076×644px each<br>
+          PDF: 89×51 mm page, front/back as separate pages
+        </div>
       </div>
     </div>
   </div>
